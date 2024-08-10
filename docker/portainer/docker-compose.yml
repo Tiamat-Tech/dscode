@@ -1,0 +1,30 @@
+version: "3"
+services:
+  portainer:
+    image: portainer/portainer-ce
+    container_name: objPortainer
+    command: -H unix:///var/run/docker.sock
+    restart: unless-stopped
+    ports:
+      - 9000:9000
+      - 8000:8000
+      # Default Administrator User
+      #   URL: http://localhost:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - vol_data_portainer:/data:rw
+    networks:
+      - net_public
+
+volumes:
+  vol_config:
+  vol_data_portainer:
+  # Named volumes are stored in a part of the host filesystem
+  # which is managed by Docker (/var/lib/docker/volumes/ on Linux)
+  # Docker appends [FOLDER] name to named volumes.
+  #   nginxpm_vol_config
+
+networks:
+  net_public:
+  # Docker appends [FOLDER] name to named networks.
+  #   nginxpm_net_public
